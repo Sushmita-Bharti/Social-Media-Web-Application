@@ -48,6 +48,9 @@ const CreatePost = () => {
   return (
     <form className="create-post" onSubmit={handleSubmit}>
       <div className="mb-3">
+        <center>
+          <h2>Create your post</h2>
+        </center>
         <label htmlFor="userId" className="form-label">
           Enter your User Id here
         </label>
