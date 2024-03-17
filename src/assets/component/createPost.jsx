@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { MdAddReaction } from "react-icons/md";
 import { FcLike } from "react-icons/fc";
 import { PostList } from "../store/postliststore";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import App from "../../App";
 
 const CreatePost = () => {

@@ -14,7 +14,7 @@
     min-height: 800px;
 }
 
-.createPost{
+.create-post {
     max-width: 45%;
     align-items: center;
     margin-left: 28%;
@@ -36,4 +36,12 @@ span.badge.text-bg-primary.hashtag {
 }
 .spinner{
     margin:10% 0% !important;
+}
+svg.bi.pe-none.me-2 {
+    display: none;
+}
+.icon{
+    color:rgb(255,193,7);
+    font-size: 22px;
+    margin: 2px 10px 2px 0px;
 }

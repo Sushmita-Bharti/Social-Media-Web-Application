@@ -23,10 +23,8 @@ const PostListReducer = (currPostList, action) => {
   } else if (action.type === "add_initial_posts") {
     newpostList = action.payload.posts;
   } else if (action.type === "add_post") {
-    console.log("Main yaha hoon");
     newpostList = [action.payload.post, ...currPostList];
   }
-  console.log(newpostList);
   return newpostList;
 };
 
