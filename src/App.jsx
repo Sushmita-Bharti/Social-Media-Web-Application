@@ -7,27 +7,33 @@ import Sidebar from "./assets/component/Sidebar";
 import CreatePost from "./assets/component/createPost";
 import Post from "./assets/component/Post";
 import PostList from "./assets/component/PostList";
+import PostListProvider from "./assets/store/postliststore";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [selectedTab, setSelectedTab] = useState("Create Post");
-  <PostListProvider>
-    return (
-    <div className="app-container">
-      <Sidebar
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      ></Sidebar>
-      <div className="content">
-        <Header></Header>
-        {selectedTab === "Home" ? (
-          <PostList></PostList>
-        ) : (
-          <CreatePost></CreatePost>
-        )}
-        <Footer></Footer>
+  const [selectedTab, setSelectedTab] = useState("Home");
+
+  return (
+    <PostListProvider>
+      <div className="app-container">
+        <Sidebar
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+        ></Sidebar>
+        <div className="content">
+          <Header></Header>
+          {selectedTab === "Home" ? (
+            <PostList></PostList>
+          ) : (
+            <CreatePost
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+            ></CreatePost>
+          )}
+          <Footer></Footer>
+        </div>
       </div>
-    </div>
-    );
-  </PostListProvider>;
+    </PostListProvider>
+  );
 }
 export default App;

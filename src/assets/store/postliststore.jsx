@@ -1,47 +1,94 @@
-import { createContext, useContext, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useReducer,
+  useState,
+  useEffect,
+} from "react";
 
-const PostList = createContext({
+export const PostList = createContext({
   postList: [],
   addPost: () => {},
+  addInitialPosts: () => {},
+  fetching: false,
   deletePost: () => {},
 });
 
-const PostListReducer = (action, currPostList) => {
-  return currPostList;
+const PostListReducer = (currPostList, action) => {
+  let newpostList = currPostList;
+  if (action.type === "delete_post") {
+    newpostList = currPostList.filter(
+      (post) => post.id !== action.payload.postId
+    );
+  } else if (action.type === "add_initial_posts") {
+    newpostList = action.payload.posts;
+  } else if (action.type === "add_post") {
+    console.log("Main yaha hoon");
+    newpostList = [action.payload.post, ...currPostList];
+  }
+  console.log(newpostList);
+  return newpostList;
 };
 
 const PostListProvider = ({ children }) => {
-  const [postList, dispatchList] = useReducer(
-    PostListReducer,
-    default_postList
+  const [postList, dispatchList] = useReducer(PostListReducer, []);
+  const [fetching, setFetching] = useState(false);
+
+  const addPost = (post) => {
+    dispatchList({
+      type: "add_post",
+      payload: {
+        post,
+      },
+    });
+  };
+
+  const addInitialPosts = (posts) => {
+    dispatchList({
+      type: "add_initial_posts",
+      payload: {
+        posts,
+      },
+    });
+  };
+
+  const deletePost = useCallback(
+    (postId) => {
+      dispatchList({
+        type: "delete_post",
+        payload: {
+          postId,
+        },
+      });
+    },
+    [dispatchList]
   );
 
-  const addPost = () => {};
+  useEffect(() => {
+    setFetching(true);
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-  const deletePost = () => {};
+    fetch("https://dummyjson.com/posts", { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        addInitialPosts(data.posts);
+        setFetching(false);
+      });
+
+    return () => {
+      console.log("Cleaning up UseEffect.");
+      controller.abort();
+    };
+  }, []);
+
   return (
-    <PostList.Provider value={{ postList, addPost, deletePost }}>
+    <PostList.Provider
+      value={{ postList, addPost, addInitialPosts, fetching, deletePost }}
+    >
       {children}
     </PostList.Provider>
   );
 };
 
-const default_postList = [
-  {
-    id: "1",
-    Title: "Going to Varanasi",
-    body: "Enjoying ghats and Galiya of this beautiful city",
-    reaction: 2,
-    userId: "sushmita_bharti",
-    tags: ["vacation", "holicity"],
-  },
-  {
-    id: "2",
-    Title: "Exploring Sprituality",
-    body: "Enjoying ghats and Galiya of this beautiful city of ganga",
-    reaction: 3,
-    userId: "21_bharti",
-    tags: ["vacation", "holicity"],
-  },
-];
 export default PostListProvider;

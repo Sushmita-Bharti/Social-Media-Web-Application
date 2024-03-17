@@ -3,7 +3,7 @@ const Sidebar = ({ selectedTab, setSelectedTab }) => {
     <>
       <div
         className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar"
-        style={{ width: "280px" }}
+        style={{ width: "190px" }}
       >
         <a
           href="/"
@@ -62,13 +62,13 @@ const Sidebar = ({ selectedTab, setSelectedTab }) => {
             aria-expanded="false"
           >
             <img
-              src="https://github.com/mdo.png"
+              src="C:\Users\bhart\Downloads\Sumu.jpg"
               alt=""
               width="32"
               height="32"
               className="rounded-circle me-2"
             />
-            <strong>mdo</strong>
+            <strong>Sushmita</strong>
           </a>
           <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
             <li>
